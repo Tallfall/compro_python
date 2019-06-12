@@ -1,0 +1,24 @@
+#if there exists K such that X**K %mod == Y % mod, return K % (mod-1)
+#Otherwise, return -1
+def bsgs(X, Y, mod):
+    Y %= mod
+    X %= mod
+    
+    rm = int(mod**(0.5)) + 2
+    R = pow(pow(X, rm ,mod), mod-2, mod)
+    
+    D = {Y: 0}
+    p = Y
+    for a in range(1, rm):
+        p = p*R % mod
+        D[p] = a
+    
+    p = 1
+    b = 0
+    if p in D:
+        return (D[p]*rm + b)%(mod-1)
+    for b in range(1, rm):
+        p = (p*X) % mod
+        if p in D:
+            return (D[p]*rm + b)%(mod-1)
+    return -1
